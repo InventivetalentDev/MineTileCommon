@@ -8,14 +8,14 @@ public class TeleportRequest {
 
 	@Expose public UUID player;
 	@Expose public UUID currentServer;
-	@Expose public int  x;
-	@Expose public int  y;
-	@Expose public int  z;
+	@Expose public double  x;
+	@Expose public double  y;
+	@Expose public double  z;
 
 	public TeleportRequest() {
 	}
 
-	public TeleportRequest(UUID player, UUID currentServer, int x, int y, int z) {
+	public TeleportRequest(UUID player, UUID currentServer, double x, double y, double z) {
 		this.player = player;
 		this.currentServer = currentServer;
 		this.x = x;
