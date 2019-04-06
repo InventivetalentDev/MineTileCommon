@@ -30,6 +30,7 @@ public class PlayerData {
 	@Expose public int totalExperience;
 	@Expose public float saturation;
 	@Expose public int foodLevel;
+	@Expose public int gameMode;
 
 	@Expose public String inventory;// Base64 String
 
