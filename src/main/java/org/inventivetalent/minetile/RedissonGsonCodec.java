@@ -15,19 +15,14 @@ public class RedissonGsonCodec extends BaseCodec {
 	private final Gson GSON = new Gson();
 
 	private final Encoder encoder = o -> {
-		System.out.println("ENCODE");
-		System.out.println(o);
 		JsonObject json = new JsonObject();
 		json.addProperty("type", o.getClass().getName());
 		json.add("data", GSON.toJsonTree(o));
-		System.out.println(json);
 		return Unpooled.wrappedBuffer(GSON.toJson(json).getBytes());
 	};
 
 	private final Decoder<Object> decoder = (byteBuf, state) -> {
-		System.out.println("DECODE");
 		JsonObject json = GSON.fromJson(new InputStreamReader(new ByteBufInputStream(byteBuf)), JsonObject.class);
-		System.out.println(json);
 		Class clazz;
 		try {
 			clazz = Class.forName(json.get("type").getAsString());

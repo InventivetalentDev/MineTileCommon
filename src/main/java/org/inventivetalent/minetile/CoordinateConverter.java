@@ -10,4 +10,7 @@ public class CoordinateConverter {
 		return d - (tileI * tileSize * 2 * 16) + centerD;
 	}
 
+
+
+
 }
