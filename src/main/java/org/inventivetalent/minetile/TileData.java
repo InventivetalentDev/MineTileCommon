@@ -4,6 +4,9 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.gson.annotations.Expose;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class TileData implements ByteArraySerializable<TileData> {
 
 	@Expose public int x;
@@ -62,6 +65,13 @@ public class TileData implements ByteArraySerializable<TileData> {
 
 	public static TileData fromDataString(String data) {
 		return fromDataArray(data.split(";"));
+	}
+
+	public static TileData fromSQL(ResultSet res) throws SQLException {
+		return new TileData(
+				res.getInt("x"),
+				res.getInt("z"),
+				0);
 	}
 
 }

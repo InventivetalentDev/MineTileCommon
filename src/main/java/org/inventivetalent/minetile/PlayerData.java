@@ -1,7 +1,10 @@
 package org.inventivetalent.minetile;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,5 +76,10 @@ public class PlayerData {
 //	@Expose public float xpProgress;
 //	@Expose public int xpTotal;
 //	@Expose public int xpSeed;
+
+	public static PlayerData fromSQL(ResultSet res) throws SQLException {
+		String data = res.getString("data");
+		return new Gson().fromJson(data, PlayerData.class);
+	}
 
 }

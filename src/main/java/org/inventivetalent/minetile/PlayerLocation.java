@@ -2,6 +2,9 @@ package org.inventivetalent.minetile;
 
 import com.google.gson.annotations.Expose;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class PlayerLocation {
 
 	@Expose public double x;
@@ -30,5 +33,14 @@ public class PlayerLocation {
 				", pitch=" + pitch +
 				", yaw=" + yaw +
 				'}';
+	}
+
+	public static PlayerLocation fromSQL(ResultSet res) throws SQLException {
+		return new PlayerLocation(
+				res.getDouble("x"),
+				res.getDouble("y"),
+				res.getDouble("z"),
+				res.getFloat("pitch"),
+				res.getFloat("yaw"));
 	}
 }
