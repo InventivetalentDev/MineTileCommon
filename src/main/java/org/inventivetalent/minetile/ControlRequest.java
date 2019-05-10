@@ -12,4 +12,11 @@ public class ControlRequest {
 	public ControlRequest(ControlAction action) {
 		this.action = action;
 	}
+
+	@Override
+	public String toString() {
+		return "ControlRequest{" +
+				"action=" + action +
+				'}';
+	}
 }

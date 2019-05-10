@@ -23,4 +23,14 @@ public class TeleportRequest {
 		this.z = z;
 	}
 
+	@Override
+	public String toString() {
+		return "TeleportRequest{" +
+				"player=" + player +
+				", currentServer=" + currentServer +
+				", x=" + x +
+				", y=" + y +
+				", z=" + z +
+				'}';
+	}
 }
