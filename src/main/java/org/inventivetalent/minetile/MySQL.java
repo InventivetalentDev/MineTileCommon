@@ -2,6 +2,7 @@ package org.inventivetalent.minetile;
 
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.UUID;
@@ -10,7 +11,7 @@ import java.util.concurrent.Executors;
 
 public class MySQL {
 
-	private Connection connection;
+	private BasicDataSource connectionPool;
 	public  String     prefix = "minetile_";
 
 	private Executor executor;
@@ -26,23 +27,33 @@ public class MySQL {
 	public void connect(String host, int port, String user, String pass, String db, String prefix) throws SQLException {
 		this.prefix = prefix;
 		String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?autoReconnect=true";
-		this.connection = DriverManager.getConnection(url, user, pass);
+
+		this.connectionPool = new BasicDataSource();
+		this.connectionPool.setUsername(user);
+		this.connectionPool.setPassword(pass);
+		this.connectionPool.setDriverClassName("com.mysql.jdbc.Driver");
+		this.connectionPool.setUrl(url);
+		this.connectionPool.setInitialSize(1);
 	}
 
 	public void close() {
-		if (this.connection != null) {
+		if (this.connectionPool != null) {
 			try {
-				this.connection.close();
+				this.connectionPool.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
+	public Connection getConnection() throws SQLException {
+		return this.connectionPool.getConnection();
+	}
+
 	@SneakyThrows
 	public PreparedStatement stmt(String template)  {
-		if (this.connection != null) {
-			return this.connection.prepareStatement(template);
+		if (this.connectionPool != null) {
+			return this.connectionPool.getConnection().prepareStatement(template);
 		} else {
 			throw new IllegalStateException("connection is null");
 		}
